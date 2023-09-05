@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/css.css">
+</head>
+<body>
+    <div id="app">
+        <!-- 1. v-model 綁定 -->
+        <div class="demo">
+            <h2>1. v-model 綁定</h2>
+            <input type="text" name="form-control" v-model="mytitle">
+            <p class="h3 mt-3">你輸入的字為: {{ mytitle }}</p>
+            <div v-text="mytitle"></div>
+            <div v-html="mytitle"></div>
+        </div>
+
+        <!-- 2. v-bind 綁定 -->
+        <div class="demo">
+            <h2>2. v-bind(簡寫 :)</h2>
+            <img v-bind:src="imgSrc" alt="" v-bind:class="classW25">
+            <img v-bind:src="imgSrc01" alt="" v-bind:class="classW50">
+            <br>
+            <input type="text" class="form-control" v-model="imgSrc01">
+
+        </div>
+        
+        <!-- 3. v-if and v-for -->
+        <div class="demo">
+            <h2>3. v-if and v-for</h2>
+            <ul class="list-group">
+                <li class="list-group-item" v-for="(item, key) in list">
+                    {{ key+1 }}.{{ item.product }} 1斤 / {{ item.price }}元
+                </li>
+            </ul>
+            <!-- v-for 不能與 v-if 放在一起,要將v-for 放在template中-->
+            <ul class="list-group my-3">
+                <template v-for="(item, key) in list">
+                   <li class="list-group-item" v-if="item.price >= 50">
+                    {{ key+1 }}.{{ item.product }} 1斤 / {{ item.price }}元
+                    </li>
+                </template>   
+            </ul>
+
+            <div class="h1" v-if="textShow">
+                {{ text02 }}
+            </div> 
+            
+            <hr>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                  <a class="nav-link"  v-on:click.prevnet="mylink = '蘋果'" v-bind:class="{'active' : mylink == '蘋果'}">蘋果</a>
+                  <!-- 左邊是綁定class的元素 : 右邊是成立的條件-->
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" v-on:click.prevnet="mylink = '百香果'" v-bind:class="{'active' : mylink == '百香果'}">百香果</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" v-on:click.prevnet="mylink = '奇異果'" v-bind:class="{'active' : mylink == '奇異果'}">奇異果</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" v-on:click.prevnet="mylink = '火龍果'" v-bind:class="{'active' : mylink == '火龍果'}">火龍果</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" v-on:click.prevnet="mylink = '芒果'" v-bind:class="{'active' : mylink == '芒果'}">芒果</a>
+                </li>
+            </ul>
+              <ul class="list-group my-3">
+                <template v-for="(item, key) in list">
+                   <li class="list-group-item" v-if="item.product == mylink">
+                    產地:{{ item.city }} / {{ item.product }} 1斤 / {{ item.price }} 元 
+                    </li>
+                </template>   
+            </ul>
+        </div>
+        
+    </div>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const App = {
+            data(){
+                return{
+                    text01: 'Hello World!',
+                    text02: 'hello 02',
+                    mytitle: 'vue 示範',
+                    imgSrc: 'images/portrait/alireza-attari-SBIak0pKUIE-unsplash.jpg',
+                    imgSrc01:'https://images.unsplash.com/photo-1593992811641-f713353cdebc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+                    // ↑貼網址需貼圖片網址而非圖片網站網址↑
+                    classW50: 'w-50',
+                    classW25: 'w-25',
+                    textShow:false,
+                    mylink: '蘋果',
+                    list:[
+                        {
+                            product:'蘋果',
+                            price:20,
+                            city:'屏東'
+                        },
+                        {
+                            product:'奇異果',
+                            price:40,
+                            city:'桃園'
+                        },
+                        {
+                            product:'百香果',
+                            price:60,
+                            city:'花蓮'
+                        },
+                        {
+                            product:'火龍果',
+                            price:80,
+                            city:'高雄'
+                        },
+                        {
+                            product:'芒果',
+                            price:100,
+                            city:'台南'
+                        },
+                    ]
+                }
+            }
+        }
+        Vue.createApp(App).mount('#app')
+    </script>
+</body>
+</html>
